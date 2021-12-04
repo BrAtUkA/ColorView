@@ -1,0 +1,151 @@
+
+// =========================================</[ Styling ]\>========================================= ; like bruh but idk web and css and this just 5 min copilot test
+// create a div with an input
+var div = document.createElement('div');
+div.innerHTML = '<h1>Color View</h1><input type="text" id="input" />';
+
+// ==================</[ input ]\>==================
+// style the input to have flat ui with Segoe UI font
+div.querySelector('input').style.border = 'none';
+div.querySelector('input').style.background = 'transparent';
+div.querySelector('input').style.fontSize = '1.5em';
+div.querySelector('input').style.padding = '0.5em';
+div.querySelector('input').style.outline = 'none';
+div.querySelector('input').style.fontFamily = 'Segoe UI Light';
+
+// show bottom border on input
+div.querySelector('input').style.borderBottom = '2px solid #17181a';
+
+//increase character sapaceing
+div.querySelector('input').style.letterSpacing = '0.1em';
+
+// disable input spell check
+div.querySelector('input').spellcheck = false;
+
+// align text to center
+div.querySelector('input').style.textAlign = 'center';
+
+
+// ==================</[ H1 ]\>==================
+
+// change h1 font to Segoe UI Light
+div.querySelector('h1').style.fontFamily = 'Segoe UI Light';
+div.querySelector('h1').style.letterSpacing = '0.1em';
+
+div.querySelector('h1').style.textAlign = 'center';
+
+//add left padding to h1
+div.querySelector('h1').style.paddingRight = '0.em';
+
+// enlarge h1
+div.querySelector('h1').style.fontSize = '3em';
+
+document.body.appendChild(div);
+
+// ==================</[ RGB-val ]\>==================
+
+var color = '#17181a';
+
+//add text to bottom right of screen
+var p = document.createElement('p');
+
+p.innerHTML = '255, 255, 255';
+p.style.position = 'fixed';
+p.style.bottom = '0';
+p.style.right = '2em';
+p.style.fontSize = '1em';
+p.style.fontFamily = 'Segoe UI Light';
+p.style.letterSpacing = '0.1em';
+p.style.textAlign = 'center';
+p.style.color = color;
+p.style.padding = '0.5em';
+p.style.background = 'transparent';
+p.style.border = '2px solid ' + color;
+
+document.body.appendChild(p);
+
+
+// center the div
+div.style.position = 'absolute';
+div.style.left = '50%';
+div.style.top = '50%';
+div.style.transform = 'translate(-50%, -50%)';
+
+
+// =========================================</[ Script.js ]\>=========================================
+// list of all hex chars
+var hexs = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+
+// check if str contains a letter not in hexs
+function isHex(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (hexs.indexOf(str[i]) == -1) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// add an input even listener to the input
+input.addEventListener('input', function(e) {
+    console.log(e.target.value);
+    console.log(isHex(e.target.value));
+
+    if (!isHex(e.target.value)) {
+        input.value = input.value.substring(0, input.value.length - 1);
+    }
+
+    if (input.value.length > 6) {
+        input.value = input.value.substring(0, 6);
+    }
+
+    // get the value of the input
+    var value = '#' + e.target.value;
+
+    //check if the value is a valid hex color
+    if (value.match(/^#[0-9a-f]{6}$/i)) {
+        
+        color = OppBrightnessOf(value);
+        console.log(color)
+
+        p.innerHTML = hexToRgb(value).r + ', ' + hexToRgb(value).g + ', ' + hexToRgb(value).b;
+
+        p.style.color = color;
+        p.style.border = '2px solid ' + color;
+
+        // change color of h1 input and border with a slow fade to color change
+        div.querySelector('h1').style.color = color;
+        div.querySelector('h1').style.transition = 'color 0.5s ease';
+        
+        div.querySelector('input').style.color = color;
+        div.querySelector('input').style.transition = 'color 0.5s ease';
+
+        div.querySelector('input').style.borderBottom = '2px solid ' + color;
+
+        // set the background color
+        document.body.style.backgroundColor = value;
+        document.body.style.transition = 'background-color 0.5s ease';
+
+    }
+
+});
+
+// function to tell if color is dark or light
+function OppBrightnessOf(color) {
+    var r = parseInt(color.substr(1, 2), 16);
+    var g = parseInt(color.substr(3, 2), 16);
+    var b = parseInt(color.substr(5, 2), 16);
+    var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    return (yiq >= 128) ? '#17181a' : '#edf0f5';
+}
+
+// hex to rgb funtion
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
