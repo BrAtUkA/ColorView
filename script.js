@@ -4,6 +4,7 @@
 var div = document.createElement('div');
 div.innerHTML = '<h1>Color View</h1><input type="text" id="input" />';
 
+div.style.cursor = 'url(\'curB.png\'), auto';
 var icon = document.querySelector('link[rel="icon"]');
 // ==================</[ input ]\>==================
 // style the input to have flat ui with Segoe UI font
@@ -44,6 +45,7 @@ div.querySelector('h1').style.paddingRight = '0.em';
 
 // enlarge h1
 div.querySelector('h1').style.fontSize = '3em';
+div.querySelector('h1').style.cursor = 'url(\'curB.png\'), auto';
 
 document.body.appendChild(div);
 
@@ -69,7 +71,12 @@ p.style.padding = '0.5em';
 p.style.background = 'transparent';
 p.style.border = '2px solid ' + color;
 p.style.opacity = '0';
+p.classList.add('pCl')
 
+// make p unseletable
+p.onselectstart = function () {
+    return false;
+}
 document.body.appendChild(p);
 
 
@@ -102,11 +109,55 @@ button.style.letterSpacing = '0.1em';
 button.style.fontSize = '1em';
 
 button.style.opacity = '0';
-
+button.style.cursor = 'url(\'curB.png\'), auto';
+button.classList.add('resetButton');
 document.body.appendChild(button);
 
 
+document.getElementById('cu').style.cursor = 'url(\'curB.png\'), auto';
+
+document.getElementById('lmg').style.cursor = 'pointer';
 // =========================================</[ Script.js ]\>=========================================
+
+// Make h1 unselectable
+div.querySelector('h1').onselectstart = function () {
+    return false;
+}
+
+//listen click on p
+p.addEventListener('click', function() {
+    if (pVis){
+        copyToClipboard(p.innerHTML);
+        if (lght){
+            Toastify({
+                text: "Color Copied To Clipboard!",
+                className: "info",
+                style: {
+                  background: "#17181a",
+                  opacity: '0.9',
+                  color: "#edf0f5",
+                  fontFamily: 'Segoe UI',
+                  border: '1px solid #fff',
+                  cursor: 'url(\'curB.png\'), auto',
+                }
+              }).showToast();
+        }
+        else{
+            Toastify({
+                text: "Color Copied To Clipboard!",
+                className: "info",
+                style: {
+                  background: "#edf0f5",
+                  opacity: "0.9",
+                  color: "#17181a",
+                  fontFamily: 'Segoe UI',
+                  border: '1px solid #000',
+                  cursor: 'url(\'curW.png\'), auto',
+                }
+              }).showToast();
+        }
+    }
+});
 
 //listen for click on lmg
 document.getElementById('lmg').addEventListener('click', function() {
@@ -142,6 +193,7 @@ document.getElementById('lmg').addEventListener('mouseleave', function() {
 button.addEventListener('click', function () {
     p.style.opacity = '0';
     p.style.transition = 'opacity 0.5s ease-in-out';
+    p.style.cursor = 'default';
     pVis = false;
     //Change title
     document.getElementsByClassName('wrapper')[0].style.opacity = '1';
@@ -150,6 +202,9 @@ button.addEventListener('click', function () {
     div.querySelector('input').value = '';
     // reset color
     ChangeColor('#17181a', '#ffffff', '#17181a');
+    button.style.cursor = 'url(\'curB.png\'), auto';
+    p.style.cursor = 'url(\'curB.png\'), auto';
+
 
     document.title = 'Color View';
     icon.href = 'https://cdn.discordapp.com/attachments/900002221188583474/916943588665999370/favico.png';
@@ -216,8 +271,10 @@ input.addEventListener('input', async function(e) {
         if (!pVis){
             p.style.opacity = '1';
             p.style.transition = 'opacity 0.5s ease-in-out';
+            p.style.cursor = 'pointer';
             button.style.opacity = '1';
             button.style.transition = 'opacity 0.5s ease-in-out';
+            button.style.cursor = 'pointer';
             pVis = true;
         }
     }
@@ -247,8 +304,10 @@ input.addEventListener('input', async function(e) {
         if (!pVis){
             p.style.opacity = '1';
             p.style.transition = 'opacity 0.5s ease-in-out';
+            p.style.cursor = 'pointer';
             button.style.opacity = '1';
             button.style.transition = 'opacity 0.5s ease-in-out';
+            button.style.cursor = 'pointer';
             pVis = true;
         }
     }
@@ -282,6 +341,10 @@ async function ChangeColor(color, value, hexCol) {
         document.body.style.transition = 'background-color 1s ease';
 
         if (color == '#edf0f5'){
+            document.getElementById('cu').style.cursor = 'url(\'curW.png\'), auto';
+            div.querySelector('h1').style.cursor = 'url(\'curW.png\'), auto';
+            div.style.cursor = 'url(\'curW.png\'), auto';
+
             document.getElementById('lmg').style.filter = 'invert(100%)';
             document.getElementById('lmg').style.transition = 'filter 1s ease';
             div.querySelector('input').classList.remove('plcDark');
@@ -289,6 +352,10 @@ async function ChangeColor(color, value, hexCol) {
             lght = true;
         }
         else{
+            document.getElementById('cu').style.cursor = 'url(\'curB.png\'), auto';
+            div.querySelector('h1').style.cursor = 'url(\'curB.png\'), auto';
+            div.style.cursor = 'url(\'curB.png\'), auto';
+
             document.getElementById('lmg').style.filter = 'invert(0%)';
             document.getElementById('lmg').style.transition = 'filter 1s ease';
             div.querySelector('input').classList.remove('plcLight');
@@ -337,4 +404,21 @@ function hexToRgb(hex) {
         g: parseInt(result[2], 16),
         b: parseInt(result[3], 16)
     } : null;
+}
+
+function copyToClipboard(str) {
+    // Create new element
+    var el = document.createElement('textarea');
+    // Set value (string to be copied)
+    el.value = str;
+    // Set non-editable to avoid focus and move outside of view
+    el.setAttribute('readonly', '');
+    el.style = {position: 'absolute', left: '-9999px'};
+    document.body.appendChild(el);
+    // Select text inside element
+    el.select();
+    // Copy text to clipboard
+    document.execCommand('copy');
+    // Remove temporary element
+    document.body.removeChild(el);
 }

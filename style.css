@@ -7,8 +7,8 @@
     top: 0;
     bottom: 0;
     position: absolute;
-  background: linear-gradient(124deg, #ff2400, #eb2020, #e8b71d, #e1e455, #1de840, #3fe5ee, #655beb, #e741f7, #db07ee);
-  background-size: 1800% 1800%;
+    background: linear-gradient(124deg, #ff2400, #eb2020, #e8b71d, #e1e455, #1de840, #3fe5ee, #655beb, #e741f7, #db07ee);
+    background-size: 1800% 1800%;
   
   -webkit-animation: rainbow 18s ease infinite;
   -z-animation: rainbow 18s ease infinite;
@@ -46,7 +46,11 @@
 }
 
 .body{
-    opacity: 0;
+    opacity: 1;
+}
+
+.background{
+    cursor: none;
 }
 
 .plcLight::-webkit-input-placeholder {
@@ -56,3 +60,16 @@
 .plcDark::-webkit-input-placeholder {
     color: #303336
  }
+
+.resetButton:hover{
+    filter:invert(40%);
+}
+
+.pCl:hover{
+    filter:invert(40%);
+}
+
+.pCl{
+    cursor: url('curB.png'), auto;
+}
+
