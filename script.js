@@ -102,6 +102,36 @@ document.body.appendChild(button);
 
 // =========================================</[ Script.js ]\>=========================================
 
+//listen for click on lmg
+document.getElementById('lmg').addEventListener('click', function() {
+    //Open web page
+    window.open('https://github.com/BrAtUkA');
+});
+
+//invert lmg on hover
+document.getElementById('lmg').addEventListener('mouseover', function() {
+    if (lght == true) {
+        document.getElementById('lmg').style.filter = 'invert(70%)';
+    }
+    else {
+        document.getElementById('lmg').style.filter = 'invert(20%)';
+    }
+
+    document.getElementById('lmg').style.transition = 'all 0.5s ease-in-out';
+});
+
+document.getElementById('lmg').addEventListener('mouseleave', function() {
+    if (lght == true) {
+        document.getElementById('lmg').style.filter = 'invert(100%)';
+    }
+    else{
+        document.getElementById('lmg').style.filter = 'invert(0%)';
+    }
+
+    document.getElementById('lmg').style.transition = 'all 0.5s ease-in-out';
+});
+
+
 //listen for click on button
 button.addEventListener('click', function () {
     p.style.opacity = '0';
@@ -215,6 +245,7 @@ input.addEventListener('input', async function(e) {
 });
 
 var prevCol
+var lght = false;
 async function ChangeColor(color, value, hexCol) {
 
         p.style.color = color;
@@ -237,6 +268,17 @@ async function ChangeColor(color, value, hexCol) {
         // set the background color
         document.body.style.backgroundColor = value;
         document.body.style.transition = 'background-color 1s ease';
+
+        if (color == '#edf0f5'){
+            document.getElementById('lmg').style.filter = 'invert(100%)';
+            document.getElementById('lmg').style.transition = 'filter 1s ease';
+            lght = true;
+        }
+        else{
+            document.getElementById('lmg').style.filter = 'invert(0%)';
+            document.getElementById('lmg').style.transition = 'filter 1s ease';
+            lght = false;
+        }
 
         // only get new icon if color is different
         if (prevCol != hexCol || prevCol == undefined) {
