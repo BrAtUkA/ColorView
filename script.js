@@ -42,6 +42,8 @@ div.querySelector('h1').style.fontSize = '3em';
 
 document.body.appendChild(div);
 
+
+
 // ==================</[ RGB-val ]\>==================
 
 var color = '#17181a';
@@ -62,6 +64,7 @@ p.style.padding = '0.5em';
 p.style.background = 'transparent';
 p.style.border = '2px solid ' + color;
 
+
 document.body.appendChild(p);
 
 
@@ -70,6 +73,9 @@ div.style.position = 'absolute';
 div.style.left = '50%';
 div.style.top = '50%';
 div.style.transform = 'translate(-50%, -50%)';
+
+// add smooth entry animation to h1
+
 
 
 // =========================================</[ Script.js ]\>=========================================
@@ -88,9 +94,12 @@ function isHex(str) {
     return true;
 }
 
+
 var previn
 // add an input even listener to the input
-input.addEventListener('input', function(e) {
+input.addEventListener('input', async function(e) {
+
+
     // console.log(e.target.value);
     // console.log(isHex(e.target.value));
 
@@ -109,30 +118,45 @@ input.addEventListener('input', function(e) {
     //check if the value is a valid hex color
     if (value.match(/^#[0-9a-f]{6}$/i)) {
 
+        // set title to value
+        document.title = 'Viewing ' + value;
+
         if (input.value.length > 6) {
             input.value = previn;
         }
         
         color = OppBrightnessOf(value);
         p.innerHTML = hexToRgb(value).r + ', ' + hexToRgb(value).g + ', ' + hexToRgb(value).b;
-        ChangeColor(color, value);
+        ChangeColor(color, value, value);
 
     }
 
     value = 'rgb(' + e.target.value + ')';
     // check if the value is a valid rgb color
     if (value.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/)) {
-        var hexCol = '#' + rgbToHex(input.value.split(',')[0]) + rgbToHex(input.value.split(',')[1]) + rgbToHex(input.value.split(',')[2]);
+        //console.log('rgb')
+        
+        var vals = [input.value.split(',')[0], input.value.split(',')[1], input.value.split(',')[2]];
+        // check if the values are in range
+        for (var i = 1; i < 4; i++) {
+            if (vals[i] > 255) {
+                vals[i] = 255;
+            }
+        }
+        document.title = 'Viewing ' + 'rgb('+ vals[0] + ', ' + vals[1] + ', ' + vals[2] + ')';
+        
+        var hexCol = '#' + rgbToHex(vals[0]) + rgbToHex(vals[1]) + rgbToHex(vals[2]);
         
         color = OppBrightnessOf(hexCol);
         p.innerHTML = hexCol.toUpperCase();
-        ChangeColor(color, value);
+        ChangeColor(color, value, hexCol);
     }
 
     previn = e.target.value;
 });
 
-function ChangeColor(color,value) {
+var prevCol
+async function ChangeColor(color, value, hexCol) {
 
         p.style.color = color;
         p.style.transition = 'all 1s ease';
@@ -150,8 +174,24 @@ function ChangeColor(color,value) {
         // set the background color
         document.body.style.backgroundColor = value;
         document.body.style.transition = 'background-color 1s ease';
+        
+        if (prevCol != hexCol || prevCol == undefined) {
+            console.log(prevCol);
+            // await response from https://some-random-api.ml/canvas/colorviewer, send color to it
+            var response = await fetch('https://some-random-api.ml/canvas/colorviewer?hex=' + hexCol.substring(1));
+            // view the image response
+            console.log(await response.blob());
+    
+            // change the icon image
+            var icon = document.querySelector('link[rel="icon"]');
+            icon.href = 'https://some-random-api.ml/canvas/colorviewer?hex=' + hexCol.substring(1);
+
+            prevCol = hexCol;
+        }
+
 }
 
+//hexcolor To image.png
 
 // function to tell if color is dark or light
 function OppBrightnessOf(color) {
