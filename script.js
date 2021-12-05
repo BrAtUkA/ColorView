@@ -74,7 +74,9 @@ div.style.transform = 'translate(-50%, -50%)';
 
 // =========================================</[ Script.js ]\>=========================================
 // list of all hex chars
-var hexs = ['a', 'b', 'c', 'd', 'e', 'f', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+var hexs = ['a', 'b', 'c', 'd', 'e', 'f',
+            'A', 'B', 'C', 'D', 'E', 'F',
+             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', ',', ' '];
 
 // check if str contains a letter not in hexs
 function isHex(str) {
@@ -86,31 +88,54 @@ function isHex(str) {
     return true;
 }
 
+var previn
 // add an input even listener to the input
 input.addEventListener('input', function(e) {
-    console.log(e.target.value);
-    console.log(isHex(e.target.value));
+    // console.log(e.target.value);
+    // console.log(isHex(e.target.value));
 
     if (!isHex(e.target.value)) {
         input.value = input.value.substring(0, input.value.length - 1);
     }
 
-    if (input.value.length > 6) {
-        input.value = input.value.substring(0, 6);
+    if (input.value.length > 13) {
+        input.value = previn;
     }
 
     // get the value of the input
     var value = '#' + e.target.value;
+    value = value.substring(0, 7);
 
     //check if the value is a valid hex color
     if (value.match(/^#[0-9a-f]{6}$/i)) {
+
+        if (input.value.length > 6) {
+            input.value = previn;
+        }
         
         color = OppBrightnessOf(value);
-        console.log(color)
-
         p.innerHTML = hexToRgb(value).r + ', ' + hexToRgb(value).g + ', ' + hexToRgb(value).b;
+        ChangeColor(color, value);
+
+    }
+
+    value = 'rgb(' + e.target.value + ')';
+    // check if the value is a valid rgb color
+    if (value.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/)) {
+        var hexCol = '#' + rgbToHex(input.value.split(',')[0]) + rgbToHex(input.value.split(',')[1]) + rgbToHex(input.value.split(',')[2]);
+        
+        color = OppBrightnessOf(hexCol);
+        p.innerHTML = hexCol.toUpperCase();
+        ChangeColor(color, value);
+    }
+
+    previn = e.target.value;
+});
+
+function ChangeColor(color,value) {
 
         p.style.color = color;
+        p.style.transition = 'all 1s ease';
         p.style.border = '2px solid ' + color;
 
         // change color of h1 input and border with a slow fade to color change
@@ -118,17 +143,15 @@ input.addEventListener('input', function(e) {
         div.querySelector('h1').style.transition = 'color 0.5s ease';
         
         div.querySelector('input').style.color = color;
-        div.querySelector('input').style.transition = 'color 0.5s ease';
+        div.querySelector('input').style.transition = 'all 0.4s ease-in-out';
 
         div.querySelector('input').style.borderBottom = '2px solid ' + color;
 
         // set the background color
         document.body.style.backgroundColor = value;
-        document.body.style.transition = 'background-color 0.5s ease';
+        document.body.style.transition = 'background-color 1s ease';
+}
 
-    }
-
-});
 
 // function to tell if color is dark or light
 function OppBrightnessOf(color) {
@@ -138,6 +161,17 @@ function OppBrightnessOf(color) {
     var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
     return (yiq >= 128) ? '#17181a' : '#edf0f5';
 }
+
+//rgb to hex
+function rgbToHex(rgb) {
+    var hex = Number(rgb).toString(16);
+    if (hex.length < 2) {
+        hex = "0" + hex;
+    }
+    return hex;
+}
+
+
 
 // hex to rgb funtion
 function hexToRgb(hex) {
