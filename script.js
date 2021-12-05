@@ -1,9 +1,10 @@
 
 // =========================================</[ Styling ]\>========================================= ; like bruh but idk web and css and this just 5 min copilot test
-// create a div with an input
+// create a div with an input                                                                            jeez this grew quite alot
 var div = document.createElement('div');
 div.innerHTML = '<h1>Color View</h1><input type="text" id="input" />';
 
+var icon = document.querySelector('link[rel="icon"]');
 // ==================</[ input ]\>==================
 // style the input to have flat ui with Segoe UI font
 div.querySelector('input').style.border = 'none';
@@ -74,25 +75,45 @@ div.style.left = '50%';
 div.style.top = '50%';
 div.style.transform = 'translate(-50%, -50%)';
 
-// add flat ui button at middle-bottom of screen
+// ==================</[ Reset-button ]\>==================
 
+// add flat ui button at middle-bottom of screen
 var button = document.createElement('button');
 button.innerHTML = '<i class="material-icons">Reset</i>';
 button.style.position = 'fixed';
 // align button to middle-bottom of screen
 button.style.position = 'absolute';
 button.style.bottom = '1%';
-button.style.right = '49%';
+button.style.right = '48.5%';
 button.style.background = 'transparent';
 
 button.style.border = 'solid 1px';
 button.style.borderColor = '#17181a';
-button.style.borderRadius = '2em';
-
+button.style.borderRadius = '0.2em';
 button.style.textAlign = 'center';
 
-document.body.appendChild(button);
+//change button text font to Segoe UI Light
+button.style.fontFamily = 'Segoe UI';
+button.style.letterSpacing = '0.1em';
+button.style.fontSize = '1em';
 
+//listen for click on button
+button.addEventListener('click', function () {
+    //Change title
+    document.getElementsByClassName('wrapper')[0].style.opacity = '1';
+    document.getElementsByClassName('wrapper')[0].style.transition = 'opacity 1s ease-in-out';
+    
+    div.querySelector('input').value = '';
+    // reset color
+    ChangeColor('#17181a', '#ffffff', '#17181a');
+
+    document.title = 'Color View';
+    icon.href = 'https://cdn.discordapp.com/attachments/900002221188583474/916943588665999370/favico.png';
+
+});
+
+
+document.body.appendChild(button);
 
 
 // =========================================</[ Script.js ]\>=========================================
@@ -115,7 +136,6 @@ function isHex(str) {
 var previn
 // add an input even listener to the input
 input.addEventListener('input', async function(e) {
-
 
     // console.log(e.target.value);
     // console.log(isHex(e.target.value));
@@ -199,6 +219,8 @@ async function ChangeColor(color, value, hexCol) {
         div.querySelector('input').style.borderBottom = '2px solid ' + color;
 
         button.style.borderColor = color;
+        button.style.color = color;
+        button.style.transition = 'all 0.4s ease-in-out';
 
         // set the background color
         document.body.style.backgroundColor = value;
@@ -209,7 +231,7 @@ async function ChangeColor(color, value, hexCol) {
             // await response from https://some-random-api.ml/canvas/colorviewer, set icon herf to it
             
             // change the icon image
-            var icon = document.querySelector('link[rel="icon"]');
+            
             icon.href = 'https://some-random-api.ml/canvas/colorviewer?hex=' + hexCol.substring(1);
             console.log('New iconColor Requested! : ' + icon.href);
 
