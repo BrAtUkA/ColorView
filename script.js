@@ -106,6 +106,7 @@ document.body.appendChild(button);
 button.addEventListener('click', function () {
     p.style.opacity = '0';
     p.style.transition = 'opacity 0.5s ease-in-out';
+    pVis = false;
     //Change title
     document.getElementsByClassName('wrapper')[0].style.opacity = '1';
     document.getElementsByClassName('wrapper')[0].style.transition = 'opacity 1s ease-in-out';
@@ -137,6 +138,7 @@ function isHex(str) {
 
 
 var previn
+var pVis = false;
 // add an input even listener to the input
 input.addEventListener('input', async function(e) {
 
@@ -172,8 +174,12 @@ input.addEventListener('input', async function(e) {
         color = OppBrightnessOf(value);
         p.innerHTML = hexToRgb(value).r + ', ' + hexToRgb(value).g + ', ' + hexToRgb(value).b;
         ChangeColor(color, value, value);
-        p.style.opacity = '1';
-        p.style.transition = 'opacity 0.5s ease-in-out';
+
+        if (!pVis){
+            p.style.opacity = '1';
+            p.style.transition = 'opacity 0.5s ease-in-out';
+            pVis = true;
+        }
     }
 
     value = 'rgb(' + e.target.value + ')';
@@ -197,8 +203,12 @@ input.addEventListener('input', async function(e) {
         color = OppBrightnessOf(hexCol);
         p.innerHTML = hexCol.toUpperCase();
         ChangeColor(color, value, hexCol);
-        p.style.opacity = '1';
-        p.style.transition = 'opacity 0.5s ease-in-out';
+
+        if (!pVis){
+            p.style.opacity = '1';
+            p.style.transition = 'opacity 0.5s ease-in-out';
+            pVis = true;
+        }
     }
 
     previn = e.target.value;
