@@ -138,7 +138,7 @@ input.addEventListener('input', async function(e) {
         
         var vals = [input.value.split(',')[0], input.value.split(',')[1], input.value.split(',')[2]];
         // check if the values are in range
-        for (var i = 1; i < 4; i++) {
+        for (var i = 0; i < 4; i++) {
             if (vals[i] > 255) {
                 vals[i] = 255;
             }
