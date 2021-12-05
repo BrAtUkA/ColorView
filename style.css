@@ -69,7 +69,16 @@
     filter:invert(40%);
 }
 
-.pCl{
-    cursor: url('curB.png'), auto;
-}
 
+#mouse {
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-5%, -5%);
+    cursor: none;
+    z-index: 1;
+}

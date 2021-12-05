@@ -4,7 +4,7 @@
 var div = document.createElement('div');
 div.innerHTML = '<h1>Color View</h1><input type="text" id="input" />';
 
-div.style.cursor = 'url(\'curB.png\'), auto';
+div.style.cursor = 'none';
 var icon = document.querySelector('link[rel="icon"]');
 // ==================</[ input ]\>==================
 // style the input to have flat ui with Segoe UI font
@@ -45,7 +45,7 @@ div.querySelector('h1').style.paddingRight = '0.em';
 
 // enlarge h1
 div.querySelector('h1').style.fontSize = '3em';
-div.querySelector('h1').style.cursor = 'url(\'curB.png\'), auto';
+div.querySelector('h1').style.cursor = 'none';
 
 document.body.appendChild(div);
 
@@ -109,12 +109,12 @@ button.style.letterSpacing = '0.1em';
 button.style.fontSize = '1em';
 
 button.style.opacity = '0';
-button.style.cursor = 'url(\'curB.png\'), auto';
+button.style.cursor = 'none';
 button.classList.add('resetButton');
 document.body.appendChild(button);
 
 
-document.getElementById('cu').style.cursor = 'url(\'curB.png\'), auto';
+document.getElementById('cu').style.cursor = 'none';
 
 document.getElementById('lmg').style.cursor = 'pointer';
 // =========================================</[ Script.js ]\>=========================================
@@ -123,6 +123,7 @@ document.getElementById('lmg').style.cursor = 'pointer';
 div.querySelector('h1').onselectstart = function () {
     return false;
 }
+
 
 //listen click on p
 p.addEventListener('click', function() {
@@ -138,7 +139,7 @@ p.addEventListener('click', function() {
                   color: "#edf0f5",
                   fontFamily: 'Segoe UI',
                   border: '1px solid #fff',
-                  cursor: 'url(\'curB.png\'), auto',
+                  cursor: 'none',
                 }
               }).showToast();
         }
@@ -202,8 +203,6 @@ button.addEventListener('click', function () {
     div.querySelector('input').value = '';
     // reset color
     ChangeColor('#17181a', '#ffffff', '#17181a');
-    button.style.cursor = 'url(\'curB.png\'), auto';
-    p.style.cursor = 'url(\'curB.png\'), auto';
 
 
     document.title = 'Color View';
@@ -341,9 +340,7 @@ async function ChangeColor(color, value, hexCol) {
         document.body.style.transition = 'background-color 1s ease';
 
         if (color == '#edf0f5'){
-            document.getElementById('cu').style.cursor = 'url(\'curW.png\'), auto';
-            div.querySelector('h1').style.cursor = 'url(\'curW.png\'), auto';
-            div.style.cursor = 'url(\'curW.png\'), auto';
+            document.getElementById('mouse').src = 'curW.png';
 
             document.getElementById('lmg').style.filter = 'invert(100%)';
             document.getElementById('lmg').style.transition = 'filter 1s ease';
@@ -352,9 +349,7 @@ async function ChangeColor(color, value, hexCol) {
             lght = true;
         }
         else{
-            document.getElementById('cu').style.cursor = 'url(\'curB.png\'), auto';
-            div.querySelector('h1').style.cursor = 'url(\'curB.png\'), auto';
-            div.style.cursor = 'url(\'curB.png\'), auto';
+            document.getElementById('mouse').src = 'curB.png';
 
             document.getElementById('lmg').style.filter = 'invert(0%)';
             document.getElementById('lmg').style.transition = 'filter 1s ease';
@@ -422,3 +417,32 @@ function copyToClipboard(str) {
     // Remove temporary element
     document.body.removeChild(el);
 }
+
+const ball = document.getElementById("mouse")
+
+document.body.addEventListener("mousemove", function(e) {
+    mouseX = e.pageX;
+    mouseY = e.pageY;
+  });
+
+
+let mouseX = 0;
+let mouseY = 0;
+let ballX = 0;
+let ballY = 0;
+let speed = 0.2;
+
+function animate(){
+
+let distX = mouseX - ballX;
+let distY = mouseY - ballY;
+
+ballX = ballX + (distX * speed);
+ballY = ballY + (distY * speed);
+
+ball.style.left = ballX + "px";
+ball.style.top = ballY + "px";
+
+requestAnimationFrame(animate);
+}
+animate();
