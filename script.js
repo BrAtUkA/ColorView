@@ -174,17 +174,15 @@ async function ChangeColor(color, value, hexCol) {
         // set the background color
         document.body.style.backgroundColor = value;
         document.body.style.transition = 'background-color 1s ease';
-        
+
+        // only get new icon if color is different
         if (prevCol != hexCol || prevCol == undefined) {
-            console.log(prevCol);
-            // await response from https://some-random-api.ml/canvas/colorviewer, send color to it
-            var response = await fetch('https://some-random-api.ml/canvas/colorviewer?hex=' + hexCol.substring(1));
-            // view the image response
-            console.log(await response.blob());
-    
+            // await response from https://some-random-api.ml/canvas/colorviewer, set icon herf to it
+            
             // change the icon image
             var icon = document.querySelector('link[rel="icon"]');
             icon.href = 'https://some-random-api.ml/canvas/colorviewer?hex=' + hexCol.substring(1);
+            console.log('New iconColor Requested! : ' + icon.href);
 
             prevCol = hexCol;
         }
@@ -210,8 +208,6 @@ function rgbToHex(rgb) {
     }
     return hex;
 }
-
-
 
 // hex to rgb funtion
 function hexToRgb(hex) {
