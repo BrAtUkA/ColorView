@@ -1,5 +1,6 @@
 # ColorView
 a simple copilot test with a color preview web page : ) went way better than expected.
+Also the plan was to use nothing but js for the site.
 
 
 ## HEX Color View
