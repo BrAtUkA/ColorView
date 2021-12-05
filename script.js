@@ -104,6 +104,8 @@ document.body.appendChild(button);
 
 //listen for click on button
 button.addEventListener('click', function () {
+    p.style.opacity = '0';
+    p.style.transition = 'opacity 0.5s ease-in-out';
     //Change title
     document.getElementsByClassName('wrapper')[0].style.opacity = '1';
     document.getElementsByClassName('wrapper')[0].style.transition = 'opacity 1s ease-in-out';
@@ -114,6 +116,7 @@ button.addEventListener('click', function () {
 
     document.title = 'Color View';
     icon.href = 'https://cdn.discordapp.com/attachments/900002221188583474/916943588665999370/favico.png';
+
 
 });
 
@@ -176,7 +179,6 @@ input.addEventListener('input', async function(e) {
     value = 'rgb(' + e.target.value + ')';
     // check if the value is a valid rgb color
     if (value.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/)) {
-
         document.getElementsByClassName('wrapper')[0].style.opacity = '0';
         document.getElementsByClassName('wrapper')[0].style.transition = 'opacity 1s ease-in-out';
         //console.log('rgb')
@@ -206,8 +208,8 @@ var prevCol
 async function ChangeColor(color, value, hexCol) {
 
         p.style.color = color;
-        p.style.transition = 'all 1s ease';
         p.style.border = '2px solid ' + color;
+        p.style.transition = 'all 1s ease';
 
         // change color of h1 input and border with a slow fade to color change
         div.querySelector('h1').style.color = color;
