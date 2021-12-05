@@ -63,7 +63,7 @@ p.style.color = color;
 p.style.padding = '0.5em';
 p.style.background = 'transparent';
 p.style.border = '2px solid ' + color;
-
+p.style.opacity = '0';
 
 document.body.appendChild(p);
 
@@ -74,7 +74,24 @@ div.style.left = '50%';
 div.style.top = '50%';
 div.style.transform = 'translate(-50%, -50%)';
 
-// add smooth entry animation to h1
+// add flat ui button at middle-bottom of screen
+
+var button = document.createElement('button');
+button.innerHTML = '<i class="material-icons">Reset</i>';
+button.style.position = 'fixed';
+// align button to middle-bottom of screen
+button.style.position = 'absolute';
+button.style.bottom = '1%';
+button.style.right = '49%';
+button.style.background = 'transparent';
+
+button.style.border = 'solid 1px';
+button.style.borderColor = '#17181a';
+button.style.borderRadius = '2em';
+
+button.style.textAlign = 'center';
+
+document.body.appendChild(button);
 
 
 
@@ -117,6 +134,10 @@ input.addEventListener('input', async function(e) {
 
     //check if the value is a valid hex color
     if (value.match(/^#[0-9a-f]{6}$/i)) {
+        // remove wrapper div
+        document.getElementsByClassName('wrapper')[0].style.opacity = '0';
+        document.getElementsByClassName('wrapper')[0].style.transition = 'opacity 1s ease-in-out';
+
 
         // set title to value
         document.title = 'Viewing ' + value;
@@ -128,12 +149,16 @@ input.addEventListener('input', async function(e) {
         color = OppBrightnessOf(value);
         p.innerHTML = hexToRgb(value).r + ', ' + hexToRgb(value).g + ', ' + hexToRgb(value).b;
         ChangeColor(color, value, value);
-
+        p.style.opacity = '1';
+        p.style.transition = 'opacity 0.5s ease-in-out';
     }
 
     value = 'rgb(' + e.target.value + ')';
     // check if the value is a valid rgb color
     if (value.match(/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/)) {
+
+        document.getElementsByClassName('wrapper')[0].style.opacity = '0';
+        document.getElementsByClassName('wrapper')[0].style.transition = 'opacity 1s ease-in-out';
         //console.log('rgb')
         
         var vals = [input.value.split(',')[0], input.value.split(',')[1], input.value.split(',')[2]];
@@ -150,6 +175,8 @@ input.addEventListener('input', async function(e) {
         color = OppBrightnessOf(hexCol);
         p.innerHTML = hexCol.toUpperCase();
         ChangeColor(color, value, hexCol);
+        p.style.opacity = '1';
+        p.style.transition = 'opacity 0.5s ease-in-out';
     }
 
     previn = e.target.value;
@@ -170,6 +197,8 @@ async function ChangeColor(color, value, hexCol) {
         div.querySelector('input').style.transition = 'all 0.4s ease-in-out';
 
         div.querySelector('input').style.borderBottom = '2px solid ' + color;
+
+        button.style.borderColor = color;
 
         // set the background color
         document.body.style.backgroundColor = value;
@@ -218,3 +247,4 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16)
     } : null;
 }
+
