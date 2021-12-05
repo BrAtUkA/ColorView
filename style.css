@@ -45,4 +45,14 @@
     filter: invert(100%);
 }
 
-/* darken logo on hover*/
+.body{
+    opacity: 0;
+}
+
+.plcLight::-webkit-input-placeholder {
+    color: #c5c9cf
+ }
+
+.plcDark::-webkit-input-placeholder {
+    color: #303336
+ }

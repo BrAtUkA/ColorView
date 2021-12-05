@@ -25,6 +25,10 @@ div.querySelector('input').spellcheck = false;
 
 // align text to center
 div.querySelector('input').style.textAlign = 'center';
+div.querySelector('input').placeholder = "Enter a color";
+div.querySelector('input').classList.add('plcDark');
+
+
 
 
 // ==================</[ H1 ]\>==================
@@ -97,6 +101,8 @@ button.style.fontFamily = 'Segoe UI';
 button.style.letterSpacing = '0.1em';
 button.style.fontSize = '1em';
 
+button.style.opacity = '0';
+
 document.body.appendChild(button);
 
 
@@ -148,6 +154,8 @@ button.addEventListener('click', function () {
     document.title = 'Color View';
     icon.href = 'https://cdn.discordapp.com/attachments/900002221188583474/916943588665999370/favico.png';
 
+    button.style.opacity = '0';
+    button.style.transition = 'opacity 0.5s ease-in-out';
 
 });
 
@@ -208,6 +216,8 @@ input.addEventListener('input', async function(e) {
         if (!pVis){
             p.style.opacity = '1';
             p.style.transition = 'opacity 0.5s ease-in-out';
+            button.style.opacity = '1';
+            button.style.transition = 'opacity 0.5s ease-in-out';
             pVis = true;
         }
     }
@@ -237,6 +247,8 @@ input.addEventListener('input', async function(e) {
         if (!pVis){
             p.style.opacity = '1';
             p.style.transition = 'opacity 0.5s ease-in-out';
+            button.style.opacity = '1';
+            button.style.transition = 'opacity 0.5s ease-in-out';
             pVis = true;
         }
     }
@@ -272,11 +284,15 @@ async function ChangeColor(color, value, hexCol) {
         if (color == '#edf0f5'){
             document.getElementById('lmg').style.filter = 'invert(100%)';
             document.getElementById('lmg').style.transition = 'filter 1s ease';
+            div.querySelector('input').classList.remove('plcDark');
+            div.querySelector('input').classList.add('plcLight');
             lght = true;
         }
         else{
             document.getElementById('lmg').style.filter = 'invert(0%)';
             document.getElementById('lmg').style.transition = 'filter 1s ease';
+            div.querySelector('input').classList.remove('plcLight');
+            div.querySelector('input').classList.add('plcDark');
             lght = false;
         }
 
@@ -285,7 +301,6 @@ async function ChangeColor(color, value, hexCol) {
             // await response from https://some-random-api.ml/canvas/colorviewer, set icon herf to it
             
             // change the icon image
-            
             icon.href = 'https://some-random-api.ml/canvas/colorviewer?hex=' + hexCol.substring(1);
             console.log('New iconColor Requested! : ' + icon.href);
 
