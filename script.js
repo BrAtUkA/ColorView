@@ -97,6 +97,11 @@ button.style.fontFamily = 'Segoe UI';
 button.style.letterSpacing = '0.1em';
 button.style.fontSize = '1em';
 
+document.body.appendChild(button);
+
+
+// =========================================</[ Script.js ]\>=========================================
+
 //listen for click on button
 button.addEventListener('click', function () {
     //Change title
@@ -112,11 +117,6 @@ button.addEventListener('click', function () {
 
 });
 
-
-document.body.appendChild(button);
-
-
-// =========================================</[ Script.js ]\>=========================================
 // list of all hex chars
 var hexs = ['a', 'b', 'c', 'd', 'e', 'f',
             'A', 'B', 'C', 'D', 'E', 'F',
