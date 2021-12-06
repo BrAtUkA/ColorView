@@ -26,6 +26,7 @@ div.querySelector('input').spellcheck = false;
 
 // align text to center
 div.querySelector('input').style.textAlign = 'center';
+div.querySelector('input').style.cursor = 'none';
 div.querySelector('input').placeholder = "Enter a color";
 div.querySelector('input').classList.add('plcDark');
 
@@ -71,6 +72,7 @@ p.style.padding = '0.5em';
 p.style.background = 'transparent';
 p.style.border = '2px solid ' + color;
 p.style.opacity = '0';
+p.style.cursor = 'none ';
 p.classList.add('pCl')
 
 // make p unseletable
@@ -116,8 +118,10 @@ document.body.appendChild(button);
 
 document.getElementById('cu').style.cursor = 'none';
 
-document.getElementById('lmg').style.cursor = 'pointer';
+document.getElementById('lmg').style.cursor = 'none';
 // =========================================</[ Script.js ]\>=========================================
+
+
 
 // Make h1 unselectable
 div.querySelector('h1').onselectstart = function () {
@@ -153,7 +157,7 @@ p.addEventListener('click', function() {
                   color: "#17181a",
                   fontFamily: 'Segoe UI',
                   border: '1px solid #000',
-                  cursor: 'url(\'curW.png\'), auto',
+                  cursor: 'none',
                 }
               }).showToast();
         }
@@ -190,11 +194,12 @@ document.getElementById('lmg').addEventListener('mouseleave', function() {
 });
 
 
-//listen for click on button
+//listen for click on button reset
 button.addEventListener('click', function () {
     p.style.opacity = '0';
     p.style.transition = 'opacity 0.5s ease-in-out';
-    p.style.cursor = 'default';
+    p.style.cursor = 'none';
+    button.style.cursor = 'none';
     pVis = false;
     //Change title
     document.getElementsByClassName('wrapper')[0].style.opacity = '1';
@@ -258,7 +263,8 @@ input.addEventListener('input', async function(e) {
 
         // set title to value
         document.title = 'Viewing ' + value;
-
+        
+        //limit input to 6 chars
         if (input.value.length > 6) {
             input.value = previn;
         }
@@ -266,14 +272,13 @@ input.addEventListener('input', async function(e) {
         color = OppBrightnessOf(value);
         p.innerHTML = hexToRgb(value).r + ', ' + hexToRgb(value).g + ', ' + hexToRgb(value).b;
         ChangeColor(color, value, value);
-
+        
+        //if not PVis set p and button opacity to 1 and cursor to pointer
         if (!pVis){
             p.style.opacity = '1';
             p.style.transition = 'opacity 0.5s ease-in-out';
-            p.style.cursor = 'pointer';
             button.style.opacity = '1';
             button.style.transition = 'opacity 0.5s ease-in-out';
-            button.style.cursor = 'pointer';
             pVis = true;
         }
     }
@@ -303,10 +308,8 @@ input.addEventListener('input', async function(e) {
         if (!pVis){
             p.style.opacity = '1';
             p.style.transition = 'opacity 0.5s ease-in-out';
-            p.style.cursor = 'pointer';
             button.style.opacity = '1';
             button.style.transition = 'opacity 0.5s ease-in-out';
-            button.style.cursor = 'pointer';
             pVis = true;
         }
     }
@@ -426,23 +429,53 @@ document.body.addEventListener("mousemove", function(e) {
   });
 
 
+// get current resolution
+
+var e = document.documentElement,
+    g = document.getElementsByTagName('body')[0],
+    x = window.innerWidth || e.clientWidth || g.clientWidth,
+    y = window.innerHeight|| e.clientHeight|| g.clientHeight;
+console.log(x + 'x' + y);
+
 let mouseX = 0;
 let mouseY = 0;
-let ballX = 0;
-let ballY = 0;
 let speed = 0.2;
 
+let ballX = 0;
+let ballY = 0;
+
 function animate(){
+    x = window.innerWidth || e.clientWidth || g.clientWidth,
+    y = window.innerHeight|| e.clientHeight|| g.clientHeight;
 
-let distX = mouseX - ballX;
-let distY = mouseY - ballY;
+    let distX = mouseX - ballX;
+    let distY = mouseY - ballY;
 
-ballX = ballX + (distX * speed);
-ballY = ballY + (distY * speed);
+    ballX = ballX + (distX * speed);
+    ballY = ballY + (distY * speed);
 
-ball.style.left = ballX + "px";
-ball.style.top = ballY + "px";
+    if (x - ballX < 60 && y - ballY < 60){
+        if(x - ballX < 20) {ball.style.left = x - 20 + "px";} else {ball.style.left = ballX + "px";}
+        if(y - ballY < 20) {ball.style.top = y - 20 + "px";} else {ball.style.top = ballY + "px";}
 
-requestAnimationFrame(animate);
+    } else if (y - ballY < 60){
+        ball.style.left = ballX + "px";
+        if(y - ballY < 20) {ball.style.top = y - 20 + "px";} else {ball.style.top = ballY + "px";}
+        speed = 0.15;
+
+    } else if (x - ballX < 60){
+        if(x - ballX < 20) {ball.style.left = x - 20 + "px";} else {ball.style.left = ballX + "px";}
+        ball.style.top = ballY + "px";
+        speed = 0.15;
+
+    } else{
+        ball.style.left = ballX + "px";
+        ball.style.top = ballY + "px";
+        speed = 0.2;
+    }
+
+    prevX = ballX - 10;
+    prevY = ballY - 10 ;
+    requestAnimationFrame(animate);
 }
 animate();
