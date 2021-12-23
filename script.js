@@ -2,7 +2,20 @@
 // =========================================</[ Styling ]\>========================================= ; like bruh but idk web and css and this just 5 min copilot test
 // create a div with an input                                                                            jeez this grew quite alot
 var div = document.createElement('div');
-div.innerHTML = '<h1>Color View</h1><input type="text" id="input" />';
+div.innerHTML += '<h1 id="1" class="vanishD"></h1>';
+div.innerHTML += '<h1 id="2" class="vanishD">C</h1>';
+div.innerHTML += '<h1 id="3" class="vanishD">o</h1>';
+div.innerHTML += '<h1 id="4" class="vanishD">l</h1>';
+div.innerHTML += '<h1 id="5" class="vanishD">o</h1>';
+div.innerHTML += '<h1 id="6" class="vanishD">r</h1>';
+div.innerHTML += '<h1 id="7" class="vanishD">-</h1>';
+div.innerHTML += '<h1 id="8" class="vanishD">V</h1>';
+div.innerHTML += '<h1 id="9" class="vanishD">i</h1>';
+div.innerHTML += '<h1 id="10" class="vanishD">e</h1>';
+div.innerHTML += '<h1 id="11" class="vanishD">w</h1>';
+
+
+div.innerHTML += '<div></div<><input type="text" id="input" />';
 
 div.style.cursor = 'none';
 var icon = document.querySelector('link[rel="icon"]');
@@ -47,6 +60,7 @@ div.querySelector('h1').style.paddingRight = '0.em';
 // enlarge h1
 div.querySelector('h1').style.fontSize = '3em';
 div.querySelector('h1').style.cursor = 'none';
+div.querySelector('h1').classList.add = 'none';
 
 document.body.appendChild(div);
 
@@ -163,6 +177,38 @@ p.addEventListener('click', function() {
         }
     }
 });
+
+
+function ChangeColRubb(){
+    if (lght == true){
+        document.getElementById(1).className = "vanishL";
+        document.getElementById(2).className = "vanishL";
+        document.getElementById(3).className = "vanishL";
+        document.getElementById(4).className = "vanishL";
+        document.getElementById(5).className = "vanishL";
+        document.getElementById(6).className = "vanishL";
+        document.getElementById(7).className = "vanishL";
+        document.getElementById(8).className = "vanishL";
+        document.getElementById(9).className = "vanishL";
+        document.getElementById(10).className = "vanishL";
+        document.getElementById(11).className = "vanishL";
+    }
+    else {
+        document.getElementById(1).className = "vanishD";
+        document.getElementById(2).className = "vanishD";
+        document.getElementById(3).className = "vanishD";
+        document.getElementById(4).className = "vanishD";
+        document.getElementById(5).className = "vanishD";
+        document.getElementById(6).className = "vanishD";
+        document.getElementById(7).className = "vanishD";
+        document.getElementById(8).className = "vanishD";
+        document.getElementById(9).className = "vanishD";
+        document.getElementById(10).className = "vanishD";
+        document.getElementById(11).className = "vanishD";
+
+    }
+
+}
 
 //listen for click on lmg
 document.getElementById('lmg').addEventListener('click', function() {
@@ -349,6 +395,7 @@ async function ChangeColor(color, value, hexCol) {
             document.getElementById('lmg').style.transition = 'filter 1s ease';
             div.querySelector('input').classList.remove('plcDark');
             div.querySelector('input').classList.add('plcLight');
+
             lght = true;
         }
         else{
@@ -360,7 +407,7 @@ async function ChangeColor(color, value, hexCol) {
             div.querySelector('input').classList.add('plcDark');
             lght = false;
         }
-
+        ChangeColRubb(lght);
         // only get new icon if color is different
         if (prevCol != hexCol || prevCol == undefined) {
             // await response from https://some-random-api.ml/canvas/colorviewer, set icon herf to it
@@ -427,6 +474,7 @@ document.body.addEventListener("mousemove", function(e) {
     mouseX = e.pageX;
     mouseY = e.pageY;
   });
+
 
 
 // get current resolution
